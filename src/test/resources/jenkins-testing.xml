@@ -8,15 +8,12 @@
     <test name="Jenkins Tests">
         <parameter name="browser" value="chrome"/>
 
-        <groups>
-            <run>
-                <include name="jenkins"/>
-            </run>
-        </groups>
-
-        <packages>
-            <package name="com.nopcommerce.testcases.user"/>
-        </packages>
+        <classes>
+            <class name="com.nopcommerce.testcases.user.User_TC_02_Login_Successfully"/>
+            <class name="com.nopcommerce.testcases.user.User_TC_04_Search_Product"/>
+            <class name="com.nopcommerce.testcases.user.User_TC_05_Sort_Product_By_Price"/>
+            <class name="com.nopcommerce.testcases.user.User_TC_06_Add_Product_To_Cart_Flow"/>
+        </classes>
     </test>
 
 </suite>
