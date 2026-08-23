@@ -39,7 +39,7 @@ public class User_TC_06_Add_Product_To_Cart_Flow extends BaseTest {
         search = testSearchData.getSearch();
     }
 
-    @Test
+    @Test(groups = "jenkins")
     public void TC_06_Add_Product_To_Cart_Flow() {
         loginPage = homePage.clickToLoginLink();
         homePage = loginPage.loginToSystem(login.getEmailAddress(), propertiesConfig.getApplicationPassword());

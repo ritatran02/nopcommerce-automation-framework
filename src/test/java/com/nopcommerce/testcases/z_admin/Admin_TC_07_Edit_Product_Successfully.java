@@ -47,7 +47,7 @@ public class Admin_TC_07_Edit_Product_Successfully extends BaseTest {
         imagePath = GlobalConstants.UPLOAD_PATH + "Apple MacBook Pro 14-inch.jpg";
     }
 
-    //@Test
+    @Test
     public void Admin_TC_07_Edit_Product_Successfully() {
         loginPage = homePage.clickToLoginLink();
         homePage = loginPage.loginToSystem(login.getEmailAddress(), propertiesConfig.getApplicationPassword());

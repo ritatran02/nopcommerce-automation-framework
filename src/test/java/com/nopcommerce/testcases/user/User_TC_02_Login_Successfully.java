@@ -29,7 +29,7 @@ public class User_TC_02_Login_Successfully extends BaseTest {
         login = testData.getUserLogin();
     }
 
-    @Test
+    @Test(groups = "jenkins")
     public void User_TC_02_Login() {
         loginPage = homePage.clickToLoginLink();
         homePage = loginPage.loginToSystem(login.getEmailAddress(), propertiesConfig.getApplicationPassword());

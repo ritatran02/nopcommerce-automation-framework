@@ -34,7 +34,7 @@ public class User_TC_04_Search_Product extends BaseTest {
         search = testData.getSearch();
     }
 
-    @Test
+    @Test(groups = "jenkins")
     public void TC_04_Search_Product(){
         searchPage = homePage.searchProduct(search.getSearch());
         List<String> productNameList = searchPage.getAllProductNameList();

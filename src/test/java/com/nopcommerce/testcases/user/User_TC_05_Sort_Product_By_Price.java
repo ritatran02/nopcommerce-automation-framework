@@ -33,7 +33,7 @@ public class User_TC_05_Sort_Product_By_Price extends BaseTest {
         search = testData.getSearch();
     }
 
-    @Test
+    @Test(groups = "jenkins")
     public void TC_05_Sort_Product_By_Price() throws ParseException {
         searchPage = homePage.searchProduct(search.getSearch());
         List<String> productNameList = searchPage.getProductNameList();

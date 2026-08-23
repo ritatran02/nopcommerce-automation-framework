@@ -36,7 +36,7 @@ public class User_TC_03_Login_With_Invalid_Password extends BaseTest {
     }
 
     @Description("User_TC_03_Login_With_Invalid_Password")
-    //@Test
+    @Test
     @Severity(SeverityLevel.CRITICAL)
     @JiraCreateIssue(isCreateIssue = true)
     public void User_TC_03_Login_With_Invalid_Password() {
