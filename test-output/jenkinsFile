@@ -1,19 +1,12 @@
 pipeline {
+
     agent any
 
     parameters {
         choice(
-            name: 'browser',
-            choices: [
-                'FIREFOX',
-                'CHROME',
-                'EDGE',
-                'HEAD_FIREFOX',
-                'HEAD_CHROME',
-                'HEAD_EDGE',
-                'SAFARI'
-            ],
-            description: 'Select browser to run tests'
+            name: 'BROWSER',
+            choices: ['CHROME', 'FIREFOX', 'EDGE'],
+            description: 'Select browser for automation testing'
         )
     }
 
@@ -24,16 +17,14 @@ pipeline {
                 slackSend(
                     channel: '#all-rita-demo',
                     color: '#439FE0',
-                    message: "🚀 BUILD STARTED - ${env.JOB_NAME} #${env.BUILD_NUMBER} - Browser: ${params.browser}"
+                    message: "🚀 Build #${BUILD_NUMBER} started - Browser: ${params.BROWSER}"
                 )
             }
         }
 
         stage('1 - Get Code') {
             steps {
-                git(
-                    url: 'https://github.com/ritatran02/nopcommerce-automation-framework'
-                )
+                checkout scm
             }
         }
 
@@ -43,37 +34,58 @@ pipeline {
             }
         }
 
-        stage('3 - Run Test') {
+        stage('3 - Prepare Environment') {
             steps {
-                echo "Selected Browser: ${params.browser}"
+
+                withCredentials([
+                    file(
+                        credentialsId: 'env-dev-properties',
+                        variable: 'ENV_FILE'
+                    )
+                ]) {
+
+                    bat '''
+                        if not exist environmentConfig mkdir environmentConfig
+
+                        copy /Y "%ENV_FILE%" "environmentConfig\\env-dev.properties"
+
+                        echo Environment configuration prepared.
+                    '''
+                }
+            }
+        }
+
+        stage('4 - Run Test') {
+            steps {
+
+                echo "Selected Browser: ${params.BROWSER}"
 
                 bat """
-                    echo Selected Browser: ${params.browser}
-
-                    mvn test -DBROWSER=${params.browser}
+                    echo Selected Browser: ${params.BROWSER}
+                    mvn test -DBROWSER=${params.BROWSER}
                 """
             }
         }
 
-        stage('4 - Public Report') {
+        stage('5 - Public Report') {
             steps {
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: false,
-                    reportDir: 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Rita_Pipeline',
-                    reportFiles: 'index.html',
-                    reportName: 'ReportNG HTML',
-                    reportTitles: ''
-                ])
+                script {
+                    echo 'Generating test report...'
+                }
             }
         }
 
-        stage('5 - Publish Test Result') {
+        stage('6 - Publish Test Result') {
             steps {
+
                 junit(
-                    allowEmptyResults: true,
-                    testResults: '**/target/surefire-reports/*.xml'
+                    testResults: 'target/surefire-reports/*.xml',
+                    allowEmptyResults: true
+                )
+
+                archiveArtifacts(
+                    artifacts: 'target/surefire-reports/**/*',
+                    allowEmptyArchive: true
                 )
             }
         }
@@ -81,20 +93,23 @@ pipeline {
 
     post {
 
-        // Notify Success
+        always {
+            echo "Build #${BUILD_NUMBER} finished."
+        }
+
         success {
             slackSend(
                 channel: '#all-rita-demo',
-                message: "✅ SUCCESS - ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+                color: 'good',
+                message: "✅ Build #${BUILD_NUMBER} SUCCESS - Browser: ${params.BROWSER}"
             )
         }
 
-        // Notify Every Failure
         failure {
             slackSend(
                 channel: '#all-rita-demo',
                 color: 'danger',
-                message: "❌ BUILD FAILURE - ${env.JOB_NAME} #${env.BUILD_NUMBER} - Browser: ${params.browser} - ${env.BUILD_URL}"
+                message: "❌ Build #${BUILD_NUMBER} FAILED - Browser: ${params.BROWSER}"
             )
         }
     }
