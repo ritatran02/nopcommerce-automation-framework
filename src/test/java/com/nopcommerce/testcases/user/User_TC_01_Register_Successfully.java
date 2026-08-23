@@ -49,6 +49,10 @@ public class User_TC_01_Register_Successfully extends BaseTest {
     @Test
 
     public void User_TC_01_Register() throws SQLException {
+        System.out.println("Current URL: " + driver.getCurrentUrl());
+        System.out.println("Title: " + driver.getTitle());
+        System.out.println("Page source contains ico-register: "
+                + driver.getPageSource().contains("ico-register"));
         registerPage = homePage.clickToRegisterLink();
         registerPage.clickToFemaleRatio();
         registerPage.enterToFirstNameTextbox(firstName);
