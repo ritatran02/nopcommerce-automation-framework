@@ -32,7 +32,6 @@ pipeline {
         stage('1 - Get Code') {
             steps {
                 git(
-                    credentialsId: 'rita02',
                     url: 'https://github.com/ritatran02/nopcommerce-automation-framework'
                 )
             }
