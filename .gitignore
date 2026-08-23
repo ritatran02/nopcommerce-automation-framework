@@ -37,3 +37,15 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Allure Reports ###
+allure-results/
+allure-report/
+
+### Log files ###
+*.log
+compile_log.txt
+compile_output.txt
+
+### IntelliJ IDEA (full folder) ###
+.idea/
