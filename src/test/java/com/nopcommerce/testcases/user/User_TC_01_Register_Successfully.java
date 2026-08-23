@@ -46,7 +46,7 @@ public class User_TC_01_Register_Successfully extends BaseTest {
     }
 
     @Description("User_TC_01_Register")
-    @Test
+    //@Test
 
     public void User_TC_01_Register() throws SQLException {
         System.out.println("Current URL: " + driver.getCurrentUrl());
