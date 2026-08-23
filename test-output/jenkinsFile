@@ -1,0 +1,102 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(
+            name: 'browser',
+            choices: [
+                'FIREFOX',
+                'CHROME',
+                'EDGE',
+                'HEAD_FIREFOX',
+                'HEAD_CHROME',
+                'HEAD_EDGE',
+                'SAFARI'
+            ],
+            description: 'Select browser to run tests'
+        )
+    }
+
+    stages {
+
+        stage('0 - Notify Build Start') {
+            steps {
+                slackSend(
+                    channel: '#all-rita-demo',
+                    color: '#439FE0',
+                    message: "🚀 BUILD STARTED - ${env.JOB_NAME} #${env.BUILD_NUMBER} - Browser: ${params.browser}"
+                )
+            }
+        }
+
+        stage('1 - Get Code') {
+            steps {
+                git(
+                    credentialsId: 'rita02',
+                    url: 'https://github.com/ritatran02/maven-hybrid'
+                )
+            }
+        }
+
+        stage('2 - Compiler') {
+            steps {
+                bat 'mvn clean'
+            }
+        }
+
+        stage('3 - Run Test') {
+            steps {
+                echo "Selected Browser: ${params.browser}"
+
+                bat """
+                    echo Selected Browser: ${params.browser}
+
+                    mvn test -DBROWSER=${params.browser}
+                """
+            }
+        }
+
+        stage('4 - Public Report') {
+            steps {
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: false,
+                    reportDir: 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Rita_Pipeline',
+                    reportFiles: 'index.html',
+                    reportName: 'ReportNG HTML',
+                    reportTitles: ''
+                ])
+            }
+        }
+
+        stage('5 - Publish Test Result') {
+            steps {
+                junit(
+                    allowEmptyResults: true,
+                    testResults: '**/target/surefire-reports/*.xml'
+                )
+            }
+        }
+    }
+
+    post {
+
+        // Notify Success
+        success {
+            slackSend(
+                channel: '#all-rita-demo',
+                message: "✅ SUCCESS - ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+            )
+        }
+
+        // Notify Every Failure
+        failure {
+            slackSend(
+                channel: '#all-rita-demo',
+                color: 'danger',
+                message: "❌ BUILD FAILURE - ${env.JOB_NAME} #${env.BUILD_NUMBER} - Browser: ${params.browser} - ${env.BUILD_URL}"
+            )
+        }
+    }
+}
