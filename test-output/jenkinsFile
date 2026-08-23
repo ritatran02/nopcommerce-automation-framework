@@ -33,7 +33,7 @@ pipeline {
             steps {
                 git(
                     credentialsId: 'rita02',
-                    url: 'https://github.com/ritatran02/maven-hybrid'
+                    url: 'https://github.com/ritatran02/nopcommerce-automation-framework'
                 )
             }
         }
