@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="UI Automation Testing" parallel="tests" thread-count="2">
+
+    <listeners>
+        <listener class-name="com.nopcommerce.commons.MethodListener"></listener>
+        <listener class-name="com.nopcommerce.jiraConfigs.JiraListener"></listener>
+        <listener class-name="com.nopcommerce.commons.RetryListener"></listener>
+    </listeners>
+
+    <parameter name="server" value="env-dev"></parameter>
+
+    <test name="Run User Test Cases on Firefox">
+        <parameter name="browser" value="firefox"/>
+        <packages>
+            <package name="com.nopcommerce.testcases.user"/>
+        </packages>
+    </test>
+
+    <test name="Run Admin Test Cases on Firefox">
+        <parameter name="browser" value="firefox"/>
+        <packages>
+            <package name="com.nopcommerce.testcases.z_admin"/>
+        </packages>
+    </test>
+
+</suite>

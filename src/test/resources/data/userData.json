@@ -1,0 +1,19 @@
+{
+  "Register": {
+    "day": "6",
+    "month": "March",
+    "year": "1995",
+    "gender": "F",
+    "company": "Yoo"
+  },
+  "Login": {
+    "emailAddress": "ritatran@gmail.com"
+  },
+  "UserLogin": {
+    "emailAddress": "ssdsdsds@gmail.com"
+  },
+  "FailedLogin": {
+    "emailAddress": "ritatran@gmail.com",
+    "password": "wrongpassword"
+  }
+}
