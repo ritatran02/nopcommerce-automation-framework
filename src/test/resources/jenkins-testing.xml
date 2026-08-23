@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="UI Automation Testing" parallel="tests" thread-count="2">
+
+<suite name="Jenkins UI Automation">
+
+    <parameter name="server" value="env-dev"/>
 
     <test name="Jenkins Tests">
         <parameter name="browser" value="chrome"/>
@@ -15,6 +18,5 @@
             <package name="com.nopcommerce.testcases.user"/>
         </packages>
     </test>
-
 
 </suite>
