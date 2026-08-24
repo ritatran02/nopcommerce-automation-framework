@@ -9,10 +9,16 @@
     </listeners>
     <parameter name="server" value="env-dev"></parameter>
 
-    <test name="Run User Test Cases on Firefox">
+    <test name="Run User Test Cases">
         <parameter name="browser" value="firefox"/>
         <packages>
             <package name="com.nopcommerce.testcases.user"/>
+        </packages>
+    </test>
+
+    <test name="Run Admin Test Cases">
+        <parameter name="browser" value="firefox"/>
+        <packages>
             <package name="com.nopcommerce.testcases.admin"/>
         </packages>
     </test>
