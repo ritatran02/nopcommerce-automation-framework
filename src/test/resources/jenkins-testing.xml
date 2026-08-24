@@ -13,6 +13,7 @@
             <class name="com.nopcommerce.testcases.user.User_TC_04_Search_Product"/>
             <class name="com.nopcommerce.testcases.user.User_TC_05_Sort_Product_By_Price"/>
             <class name="com.nopcommerce.testcases.user.User_TC_06_Add_Product_To_Cart_Flow"/>
+
         </classes>
     </test>
 </suite>
