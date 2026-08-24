@@ -13,13 +13,7 @@
         <parameter name="browser" value="firefox"/>
         <packages>
             <package name="com.nopcommerce.testcases.user"/>
-        </packages>
-    </test>
-
-    <test name="Run Admin Test Cases on Firefox">
-        <parameter name="browser" value="firefox"/>
-        <packages>
-            <package name="com.nopcommerce.testcases.z_admin"/>
+            <package name="com.nopcommerce.testcases.admin"/>
         </packages>
     </test>
 

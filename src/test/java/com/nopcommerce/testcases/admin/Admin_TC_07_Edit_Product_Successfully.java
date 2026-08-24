@@ -1,4 +1,4 @@
-package com.nopcommerce.testcases.z_admin;
+package com.nopcommerce.testcases.admin;
 
 import com.nopcommerce.commons.BaseTest;
 import com.nopcommerce.commons.GlobalConstants;
